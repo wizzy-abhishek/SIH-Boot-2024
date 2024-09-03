@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
+import java.util.Arrays;
 import java.util.UUID;
 
 @Service
@@ -28,25 +28,59 @@ public class AppointmentService {
     private DoctorService doctorService ;
 
     @Transactional
-    public void bookAppointment(Appointment appointment) throws ParseException {
+    public Appointment bookAppointment(String date, String patientId, String doctorId) {
 
-        Patient patient = patientService.findById(appointment.getPatient().getAadharNumber());
-        patient.getAppointments().add(appointment);
-        patient.getDoctors().add(appointment.getDoctorList().getFirst());
+        Appointment appointment = new Appointment();
+        appointment.setDate(date);
 
-        Doctor doctor = appointment.getDoctorList().getFirst() ;
-        doctor.getAppointments().add(appointment);
+        // Find patient and doctor
+        Patient patient = patientService.findPatientById(patientId);
+        Doctor doctor = doctorService.findById(doctorId);
+
+        if (patient == null || doctor == null) {
+            // Either patient or doctor doesn't exist, return null or throw exception
+            return null;
+        }
+
+        // Setting patient and doctor for the appointment
+        appointment.setPatient(patient);
+        appointment.getDoctorList().add(doctor);
 
         Department department = doctor.getDept();
-        department.getAppointments().add(appointment);
+        appointment.getDepartmentList().add(department);
 
+        // Check if the department and doctor are already associated with the patient
+        if (!patient.getDepartmentList().contains(department)) {
+            patient.getDepartmentList().add(department);
+        }
+
+        if (!patient.getDoctors().contains(doctor)) {
+            patient.getDoctors().add(doctor);
+        }
+
+        // Add the appointment to the patient's appointments
+        patient.getAppointments().add(appointment);
+
+        // Set a unique ID for the appointment
         String uniqueId = patient.getAadharNumber() + doctor.getId() + UUID.randomUUID().toString().substring(0, 8);
         appointment.setId(uniqueId);
 
-        appointmentRepo.save(appointment);
-        departmentService.addDepartment(department);
-        patientService.patientSave(patient);
-        doctorService.saveDoctor(doctor);
+        try {
+            // Save appointment, patient, doctor, and department
+            appointmentRepo.save(appointment);
+
+            doctor.getAppointments().add(appointment);
+            department.getAppointments().add(appointment);
+
+            departmentService.addDepartment(department);
+            doctorService.saveDoctor(doctor);
+            patientService.savePatientByObjectForAppointment(patient);
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+            return null;
+        }
+
+        return appointmentRepo.findById(uniqueId).orElse(null);
     }
 
     @Transactional
@@ -56,6 +90,14 @@ public class AppointmentService {
 
     public Appointment findByObj(Appointment appointment){
         return appointmentRepo.findById(appointment.getId()).orElse(null);
+    }
+
+    @Transactional
+    public void updateAppointmentDate(String id , String date){
+        Appointment appointment = appointmentRepo.findById(id).orElse(null);
+        assert appointment != null;
+        appointment.setDate(date);
+        appointmentRepo.save(appointment);
     }
 
 }

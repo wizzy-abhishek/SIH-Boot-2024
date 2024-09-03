@@ -50,8 +50,7 @@ public class Patient {
     )
     private List<Medicines> meds;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<java.util.Date> dates;
+    private String dates;
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
     private List<Bed> beds;
@@ -64,14 +63,14 @@ public class Patient {
     )
     private List<Appointment> appointments;
 
-    @OneToOne(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "patient", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Emergency emergency;
 
     public Patient() {
         this.departmentList = new ArrayList<>(5);
         this.doctors = new ArrayList<>(5);
         this.meds = new ArrayList<>(5);
-        this.dates = new ArrayList<>(5);
+        this.dates = String.valueOf(new ArrayList<>(5));
         this.beds = new ArrayList<>(5);
         this.appointments = new ArrayList<>(5);
     }
@@ -84,7 +83,7 @@ public class Patient {
         this.departmentList = departmentList;
         this.doctors = doctors;
         this.meds = meds;
-        this.dates = dates;
+        this.dates = dates.toString();
         this.beds = beds;
         this.appointments = appointments;
         this.emergency = emergency;
@@ -146,11 +145,11 @@ public class Patient {
         this.meds = meds;
     }
 
-    public List<Date> getDates() {
+    public String getDates() {
         return dates;
     }
 
-    public void setDates(List<Date> dates) {
+    public void setDates(String dates) {
         this.dates = dates;
     }
 

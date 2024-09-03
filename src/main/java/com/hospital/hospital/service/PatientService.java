@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -28,37 +29,29 @@ public class PatientService {
     private DoctorService doctorService ;
 
     @Transactional
-    public void patientSave(Patient patient) throws ParseException {
+    public Patient addNewPatient(String  aadhaar, String name, String mobile, String dob, Department department){
 
-        List<Date> date = List.of(new Date());
-        patient.setDates(date);
+        Patient patient = new Patient() ;
+
+        System.out.println("Enter DOB");
+        patient.setDate_of_Birth(dob);
 
         System.out.println("Enter Aadhaar number");
-        String aadhaar = patient.getAadharNumber() ;
         patient.setAadharNumber(aadhaar);
 
         System.out.println("Enter name");
-        String name = patient.getName();
         patient.setName(name);
 
         System.out.println("Enter mobile");
-        String mobile = patient.getMobile();
         patient.setMobile(mobile);
-
-        System.out.println("Enter date of birth yyyy-mm-dd format");
-        String dob = patient.getDate_of_Birth();
-        patient.setDate_of_Birth(dob);
-
 
         List<Department> deptList = deptService.findAll();
         System.out.println(deptList);
 
         System.out.println("Enter the Dept for check-up");
-        String deptInn = patient.getDepartmentList().getFirst().getName();
-        Department deptIn = deptService.findById(deptInn);
-        patient.getDepartmentList().add(deptIn);
-        deptIn.getPatients().add(patient);
+        patient.getDepartmentList().add(department);
 
+        patientRepo.save(patient);
 
 /*
         List<Doctor> docList = doctorService.findByDept(deptIn);
@@ -71,13 +64,16 @@ public class PatientService {
         doctor.getPatients().add(patient);
 
 */
+        department.getPatients().add(patient);
 
+        deptService.addDepartment(department);
+
+        return patientRepo.findById(aadhaar).orElse(null) ;
+
+    }
+
+    public void savePatientByObjectForAppointment(Patient patient){
         patientRepo.save(patient);
-        deptService.addDepartment(deptIn);
-     //   doctorService.saveDoctor(doctor);
-
-      //  patientRepo.save(patient);
-
     }
 
     public List<Patient> findByMobile(String mobile){
@@ -88,8 +84,8 @@ public class PatientService {
         return patientRepo.findByName(name) ;
     }
 
-    public Patient findById(String aadhar){
-        return patientRepo.findById(aadhar).orElse(new Patient());
+    public Patient findPatientById(String aadhar){
+        return patientRepo.findById(aadhar).orElse(null);
     }
 
     public List<Patient> findAll(){
@@ -107,4 +103,6 @@ public class PatientService {
     public void deleteAll(){
         patientRepo.deleteAll();
     }
+
+
 }

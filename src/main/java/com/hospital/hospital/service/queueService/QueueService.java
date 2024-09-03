@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -40,7 +39,7 @@ public class QueueService {
     }
 
     @Transactional
-    public Map<String, Object> queueImplement(int num_of_doctor, String dept_Name) throws IOException {
+    public Map<String, Object> queueImplement(int num_of_doctor, String dept_Name) {
         Dept dept = departmentRepository.findByName(dept_Name)
                 .orElseThrow(() -> new IllegalArgumentException("Department not found"));
 
@@ -74,6 +73,7 @@ public class QueueService {
 
             resultMap.put("assignedDoctor", currentDoctor + 1);
             resultMap.put("queuePosition", queueSize);
+            resultMap.put("departmentName", dept.getName());
 
             currentPatientNumber++;
             currentDoctor = (currentDoctor + 1) % num_of_doctor;
@@ -136,19 +136,19 @@ public class QueueService {
 
 
     @Transactional
-    public void resetPatientNumbers(String departmentName) {
-        Dept department = departmentRepository.findByName(departmentName)
-                .orElseThrow(() -> new IllegalArgumentException("Department not found"));
-
-        lock.lock(); // Ensure thread-safety
-        try {
-            queueRepository.deleteByDept(department); // Delete all records for the department
-            departmentPatientNumbers.put(department.getName(), 1); // Reset patient number to 1
-            departmentCurrentDoctor.put(department.getName(), 0); // Reset doctor assignment to first doctor
-            departmentQueues.remove(department.getName()); // Clear queues
-        } finally {
-            lock.unlock();
+    public Dept resetPatientNumbers(Dept department) {
+        if(department != null) {
+            lock.lock(); // Ensure thread-safety
+            try {
+                queueRepository.deleteByDept(department); // Delete all records for the department
+                departmentPatientNumbers.put(department.getName(), 1); // Reset patient number to 1
+                departmentCurrentDoctor.put(department.getName(), 0); // Reset doctor assignment to first doctor
+                departmentQueues.remove(department.getName()); // Clear queues
+            } finally {
+                lock.unlock();
+            }
         }
+        return department ;
     }
 
     @Transactional

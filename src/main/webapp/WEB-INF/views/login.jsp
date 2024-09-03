@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Login Page</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
 />
 </head>
 <body>
- 
+
     <div class="main-container">
         <div class="custom-shape-divider-top-1724907512">
             <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -24,20 +24,20 @@
         <div class="left-section">
             <h1>Hospital Name</h1>
             <h3>Your expertise , enhanced by our technology</h3>
-            <img src="../../../../../loginPage/doctors2.jpg" alt=""><!-- Image placeholder -->
+            <img src="doctors2.jpg" alt=""><!-- Image placeholder -->
         </div>
 
         <!-- Right Section (Login Form) -->
         <div class="right-section">
-            <form class="login-form">
+            <form action="authenticate"  method="post" class="authenticate">
                 <h2>Welcome Back</h2>
                 <div class="input-group">
                     <span class="icon"><i class="ri-user-line"></i></span> <!-- Placeholder for Username Icon -->
-                    <input type="text" placeholder="Username" required>
+                    <input type="text" id="username" name="username" placeholder="Username" required>
                 </div>
                 <div class="input-group">
                     <span class="icon"><i class="ri-lock-line"></i></span> <!-- Placeholder for Password Icon -->
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" id="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="form-options">
                     <label class="checkbox">

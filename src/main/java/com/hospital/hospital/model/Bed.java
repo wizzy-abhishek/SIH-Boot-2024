@@ -7,25 +7,19 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 @Entity
-public class Bed{
+public class Bed {
 
     @Id
     @Column(length = 20)
-    private String bedId ;
+    private String bedId;
 
-    private boolean isAllotted ;
+    private boolean isAllotted;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_aadhar")
-    private Patient patient ;
+    private Patient patient;
 
     public Bed() {
-    }
-
-    public Bed(String bedId, boolean isAllotted, Patient patient) {
-        this.bedId = bedId;
-        this.isAllotted = isAllotted;
-        this.patient = patient;
     }
 
     public String getBedId() {

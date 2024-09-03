@@ -16,8 +16,8 @@ public class DoctorService {
     private DoctorRepo doctorRepo ;
 
     @Transactional
-    public Doctor saveDoctor(Doctor doctor){
-        return doctorRepo.save(doctor);
+    public void saveDoctor(Doctor doctor){
+        doctorRepo.saveAndFlush(doctor);
     }
 
     public List<Doctor> findAll(){

@@ -5,19 +5,13 @@ import com.hospital.hospital.model.Patient;
 import com.hospital.hospital.service.DepartmentService;
 import com.hospital.hospital.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -29,39 +23,61 @@ public class PatientController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping({"patient" , "/"})
+    @GetMapping({"patient"})
     public String patientForm(Model model){
-        System.out.println("In Patient Form");
+        System.out.println("In Patient Form controller ");
 
         List<Department> departments = departmentService.getAllDepartments();
         model.addAttribute("departments", departments);
 
-        return "NewPatient";
+        return "patient";
     }
 
-    @PostMapping("patients")
-    public ModelAndView addPatient(Patient patient , ModelAndView modelAndView){
-        System.out.println("ADD PATIENT");
-        System.out.println(patient.getDate_of_Birth());
-        try {
-            patientService.patientSave(patient);
-            modelAndView.addObject("patientDetails" , patientService.findById(patient.getAadharNumber()));
-            modelAndView.setViewName("Success");
-        }catch (ParseException exception){
-            System.out.println(Arrays.toString(exception.getStackTrace()));
+    @PostMapping("patient")
+    public ModelAndView addPatient(@RequestParam("aadhaarNumber") String aadhaar , @RequestParam("name") String name  , @RequestParam("mobile") String mobile ,@RequestParam("date_of_Birth") String dob , @RequestParam("departmentList") Department department , ModelAndView modelAndView){
+
+        System.out.println("ADD PATIENT METHOD CALLED IN CONTROLLER ");
+
+        if(patientService.findPatientById(aadhaar) != null){
+            modelAndView.setViewName("error");
+            modelAndView.addObject("error" , "Its already their") ;
+            return modelAndView ;
+        }
+
+       Patient patient = patientService.addNewPatient(aadhaar , name , mobile , dob , department);
+       if (patient != null){
+            modelAndView.addObject("patientDetails" , patientService.findPatientById(aadhaar));
+            modelAndView.setViewName("patient");
+        }
+       else{
+
             System.out.println("Exception");
-            modelAndView.setViewName("Error");
-            modelAndView.addObject("error",Arrays.toString(exception.getStackTrace()));
+
+            modelAndView.setViewName("error");
+            modelAndView.addObject("error" , "ERROR OCCURRED");
+
             return modelAndView ;
         }
         System.out.println("Success");
         return modelAndView ;
     }
 
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    @GetMapping("search_Patient")
+    public ModelAndView patientSearch(@RequestParam("searchPatient") String patientId , ModelAndView modelAndView){
+
+        System.out.println("Patient Controller :- Search column ");
+
+        Patient patient = patientService.findPatientById(patientId);
+
+        if(patient == null){
+            modelAndView.addObject("error" , "NOT FOUND");
+            modelAndView.setViewName("error");
+            return modelAndView ;
+        }
+
+        modelAndView.addObject("patientDetail" , patient);
+        modelAndView.setViewName("patient");
+
+        return modelAndView ;
     }
 }
