@@ -38,22 +38,22 @@
                    </form>
                </li>
                <li>
-                   <form action="Department.jsp">
+                   <form action="department">
                        <button type="submit">Department</button>
                    </form>
                </li>
                <li>
-                   <form action="Doctors.jsp">
+                   <form action="doctor">
                        <button type="submit">Doctors</button>
                    </form>
                </li>
                <li>
-                   <form action="Inventory.jsp">
+                   <form action="underConstruction">
                        <button type="submit">Inventory</button>
                    </form>
                </li>
                <li>
-                   <form action="Emergency.jsp">
+                   <form action="underConstruction">
                        <button type="submit">Emergency</button>
                    </form>
                </li>

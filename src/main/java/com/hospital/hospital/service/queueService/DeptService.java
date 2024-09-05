@@ -1,6 +1,5 @@
 package com.hospital.hospital.service.queueService;
 
-import com.hospital.hospital.model.Department;
 import com.hospital.hospital.model.queueModel.Dept;
 import com.hospital.hospital.repo.queueRepo.DeptRepo;
 import com.hospital.hospital.repo.queueRepo.QueueRepo;
@@ -9,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class DeptService {
@@ -18,22 +19,39 @@ public class DeptService {
     @Autowired
     private DeptRepo deptRepo ;
 
+    private final Lock lock = new ReentrantLock(); // Lock to ensure thread safety
+
     public DeptService(QueueRepo queueEntityRepository) {
         this.queueEntityRepository = queueEntityRepository;
     }
 
     @Transactional
     public void resetQueueForDept(Dept dept) {
-        // Remove all QueueEntity items associated with the specified department
-        queueEntityRepository.deleteByDept(dept);
+        lock.lock();
+        try {
+            // Remove all QueueEntity items associated with the specified department
+            queueEntityRepository.deleteByDept(dept);
+        } finally {
+            lock.unlock();
+        }
     }
 
     @Transactional
     public void saveDept(Dept dept){
-        deptRepo.saveAndFlush(dept);
+        lock.lock();
+        try {
+            deptRepo.saveAndFlush(dept);
+        } finally {
+            lock.unlock();
+        }
     }
 
     public List<Dept> getAllDepartments() {
-        return deptRepo.findAll();
+        lock.lock();
+        try {
+            return deptRepo.findAll();
+        } finally {
+            lock.unlock();
+        }
     }
 }

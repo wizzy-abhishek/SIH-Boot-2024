@@ -6,91 +6,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bed Management - General Ward</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .bed-icons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .bed-container {
-            background-color: #A1CCD1; /* Blue for available beds */
-            padding: 15px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .bed-container.occupied {
-            background-color: #FFCACC; /* Red for occupied beds */
-        }
-
-        .bed-container:hover {
-            background-color: #b2b0b0;
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .popup.active {
-            display: block;
-        }
-
-        .popup input {
-            margin-bottom: 10px;
-            padding: 8px;
-            width: 100%;
-        }
-
-        .popup button {
-            padding: 8px 16px;
-            background-color: #51cf66;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        .popup button.remove {
-            background-color: #ff6b6b;
-        }
-    </style>
+    <title>Bed Management</title>
+    <link rel="stylesheet" href="bed.css">
 </head>
 <body>
     <div class="container">
+    <nav class="navbar">
+               <ul class="nav-list">
+                   <li>
+                       <form action="home">
+                           <button type="submit">Queue</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="patient">
+                           <button type="submit">Patient</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="appointment">
+                           <button type="submit">Appointment</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="bed">
+                           <button type="submit">Bed</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="department">
+                           <button type="submit">Department</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="doctor">
+                           <button type="submit">Doctors</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="underConstruction">
+                           <button type="submit">Inventory</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="underConstruction">
+                           <button type="submit">Emergency</button>
+                       </form>
+                   </li>
+               </ul>
+           </nav>
+
         <h2>General Ward - Bed Management</h2>
         <div class="bed-icons" id="bedIcons">
             <c:forEach var="bed" items="${beds}">
@@ -114,8 +79,8 @@
             <input type="hidden" id="bedIdRemove" name="bedId">
             <button type="submit" class="remove">Remove Patient</button>
         </form>
-    </div>
-
+    </div><br><br>
+    <p><b>UNDER DEVELOPMENT </b></p>
     <script>
         let selectedBed = null;
 

@@ -54,5 +54,6 @@ public class Bed {
                 "\npatientAadhaar=" + (patient != null ? patient.getAadharNumber() : "null") +  // Avoid recursive call
                 "}\n";
     }
+
 }
 

@@ -1,0 +1,128 @@
+      body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .bed-icons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .bed-container {
+            background-color: #A1CCD1; /* Blue for available beds */
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .bed-container.occupied {
+            background-color: #FFCACC; /* Red for occupied beds */
+        }
+
+        .bed-container:hover {
+            background-color: #b2b0b0;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup input {
+            margin-bottom: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+
+        .popup button {
+            padding: 8px 16px;
+            background-color: #51cf66;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .popup button.remove {
+            background-color: #ff6b6b;
+        }
+
+        p {
+
+                    font-size: 20px;
+                    color: #666;
+                    margin-top: 10px;
+                }
+                   .navbar {
+                            height: 48px;
+                            border-radius: 10px;
+                            width: 100%;
+                            margin-top: 15px;
+                            background-color: #29d8b8;
+                            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+                        }
+
+                        .nav-list {
+                            list-style-type: none;
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            justify-content: space-around;
+                        }
+
+                        .nav-list li {
+                            display: inline;
+                        }
+
+                        .nav-list li form {
+                            margin: 0;
+                            padding: 0;
+                        }
+
+                        .nav-list li button {
+                            display: block;
+                            color: white;
+                            text-align: center;
+                            padding: 14px 20px;
+                            text-decoration: none;
+                            font-size: 16px;
+                            background-color: transparent;
+                            border: none;
+                            cursor: pointer;
+                        }
+
+                        .nav-list li button:hover {
+                            background-color: #022b32;
+                            border-radius: 4px;
+                        }

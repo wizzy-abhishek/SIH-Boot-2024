@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -118,10 +117,11 @@ public class Appointment {
         return "\nAppointment{" +
                 "id=" + id +
                 "\ndate=" + date +
-                "\npatient=" + patient +
-                "\ndepartmentList=" + departmentList +
-                "\ndoctorList=" + doctorList +
-                "\ntests=" + tests +
+                "\npatient=" + (patient != null ? patient.getAadharNumber() : "null") +  // Avoid recursive call
+                "\ndepartmentList=" + (departmentList != null ? departmentList.stream().map(Department::getName).toList() : "null") +
+                "\ndoctorList=" + (doctorList != null ? doctorList.stream().map(Doctor::getName).toList() : "null") +
+                "\ntests=" + (tests != null ? tests.stream().map(Test::getTestName).toList() : "null") +
                 "}\n";
     }
+
 }

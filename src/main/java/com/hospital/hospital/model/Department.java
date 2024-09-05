@@ -84,5 +84,6 @@ public class Department {
                 "\nappointments=" + (appointments != null ? appointments.size() + " appointments" : "null") +
                 "}\n";
     }
+
 }
 

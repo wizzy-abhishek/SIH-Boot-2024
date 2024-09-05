@@ -184,12 +184,13 @@ public class Patient {
                 "\nname='" + name + '\'' +
                 "\nmobile='" + mobile + '\'' +
                 "\ndate_of_Birth=" + date_of_Birth +
-                "\ndepartments=" + departmentList.stream().map(Department::getName).toList() + // Print only department names
-                "\ndoctors=" + doctors.stream().map(doctor -> "Doctor{name='" + doctor.getName() + "', id=" + doctor.getId() + "}").toList() + // Print doctor names and IDs
-                "\nmeds=" + meds.stream().map(medicines -> "Meds Name = " + medicines.getMeds_name()).toList() +
-                "\nbeds=" + beds.stream().map(Bed::getBedId).toList() + // Avoid recursive call
-                "\nappointments=" + appointments +
-                "\nemergency=" + emergency +
+                "\ndepartments=" + (departmentList != null ? departmentList.stream().map(Department::getName).toList() : "null") +
+                "\ndoctors=" + (doctors != null ? doctors.stream().map(doctor -> "Doctor{name='" + doctor.getName() + "', id=" + doctor.getId() + "}").toList() : "null") +
+                "\nmeds=" + (meds != null ? meds.stream().map(medicines -> "Meds Name = " + medicines.getMeds_name()).toList() : "null") +
+                "\nbeds=" + (beds != null ? beds.stream().map(Bed::getBedId).toList() : "null") +
+                "\nappointments=" + (appointments != null ? appointments.size() + " appointments" : "null") +
+                "\nemergency=" + (emergency != null ? emergency.toString() : "null") +
                 "}\n";
     }
+
 }

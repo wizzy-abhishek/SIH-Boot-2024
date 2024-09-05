@@ -17,50 +17,50 @@
 <body>
     <div class="container">
         <!--nav-->
-        <nav class="navbar">
-            <ul class="nav-list">
-                <li>
-                    <form action="home">
-                        <button type="submit">Queue</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="NewPatient.jsp">
-                        <button type="submit">Patient</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Appointment.jsp">
-                        <button type="submit">Appointment</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="BedAllotment.jsp">
-                        <button type="submit">Bed</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Department.jsp">
-                        <button type="submit">Department</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Doctors.jsp">
-                        <button type="submit">Doctors</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Inventory.jsp">
-                        <button type="submit">Inventory</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Emergency.jsp">
-                        <button type="submit">Emergency</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
+ <nav class="navbar">
+               <ul class="nav-list">
+                   <li>
+                       <form action="home">
+                           <button type="submit">Queue</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="patient">
+                           <button type="submit">Patient</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="appointment">
+                           <button type="submit">Appointment</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="bed">
+                           <button type="submit">Bed</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="department">
+                           <button type="submit">Department</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="doctor">
+                           <button type="submit">Doctors</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="underConstruction">
+                           <button type="submit">Inventory</button>
+                       </form>
+                   </li>
+                   <li>
+                       <form action="underConstruction">
+                           <button type="submit">Emergency</button>
+                       </form>
+                   </li>
+               </ul>
+           </nav>
         <!--nav-->
         <div class="form-container">
             <u><b>

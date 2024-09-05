@@ -14,50 +14,50 @@
 <body>
     <div class="container">
         <!--nav bar-->
-        <nav class="navbar">
-            <ul class="nav-list">
-                <li>
-                    <form action="home">
-                        <button type="submit">Queue</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="patient">
-                        <button type="submit">Patient</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="appointment">
-                        <button type="submit">Appointment</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="bed">
-                        <button type="submit">Bed</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Department.jsp">
-                        <button type="submit">Department</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Doctors.jsp">
-                        <button type="submit">Doctors</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Inventory.jsp">
-                        <button type="submit">Inventory</button>
-                    </form>
-                </li>
-                <li>
-                    <form action="Emergency.jsp">
-                        <button type="submit">Emergency</button>
-                    </form>
-                </li>
-            </ul>
-        </nav>
+      <nav class="navbar">
+                 <ul class="nav-list">
+                     <li>
+                         <form action="home">
+                             <button type="submit">Queue</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="patient">
+                             <button type="submit">Patient</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="appointment">
+                             <button type="submit">Appointment</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="bed">
+                             <button type="submit">Bed</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="department">
+                             <button type="submit">Department</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="doctor">
+                             <button type="submit">Doctors</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="underConstruction">
+                             <button type="submit">Inventory</button>
+                         </form>
+                     </li>
+                     <li>
+                         <form action="underConstruction">
+                             <button type="submit">Emergency</button>
+                         </form>
+                     </li>
+                 </ul>
+             </nav>
 
         <!-- Form for booking an appointment -->
         <div class="form-section">
@@ -79,32 +79,38 @@
 
         <!-- Allotments Section -->
         <div class="allotments-section">
-            <div class="search">
-                <div class="search-bar">
-                    <input type="text" id="searchPatient" placeholder="Search by Patient ID">
+                <div class="search">
+                <form action="search_Appointment" id="search_Appointment" method="get">
+                    <div class="search-bar">
+                        <input type="text" id="searchPatientAppointment" name="searchPatientAppointment" placeholder="Search by Patient ID">
+                    </div>
+                    <button type="submit">Search</button>
+                    </form>
                 </div>
-                <button type="search">Search</button>
-            </div>
 
             <h3>Allotted Appointments</h3>
             <div class="allotments" id="allotmentsList">
                 <!-- Display appointment details using EL -->
-                <p>Appointment ID: ${appointmentBooked.id}</p>
-                <p>Date: ${appointmentBooked.date}</p>
-                <p>Patient Aadhaar Number: ${appointmentBooked.patient.aadharNumber}</p>
+                <c:forEach var="appointment" items="${appointmentsBooked}">
+                    <p>Appointment ID: ${appointment.id}</p>
+                    <p>Date: ${appointment.date}</p>
+                    <p>Patient Aadhaar Number: ${appointment.patient.aadharNumber}</p>
 
-                <!-- Display list of departments -->
-                <p>Departments:</p>
-                <c:forEach var="dept" items="${appointmentBooked.departmentList}">
-                    <p>${dept.name}</p>
-                </c:forEach>
+                    <!-- Display list of departments -->
+                    <p>Departments:</p>
+                    <c:forEach var="dept" items="${appointment.departmentList}">
+                        <p>${dept.name}</p>
+                    </c:forEach>
 
-                <br>
+                    <br>
 
-                <!-- Display list of doctors -->
-                <p>Doctors:</p>
-                <c:forEach var="doc" items="${appointmentBooked.doctorList}">
-                    <p>${doc.id}</p>
+                    <!-- Display list of doctors -->
+                    <p>Doctors:</p>
+                    <c:forEach var="doc" items="${appointment.doctorList}">
+                        <p>${doc.id}</p>
+                    </c:forEach>
+
+                    <br><br>
                 </c:forEach>
             </div>
         </div>

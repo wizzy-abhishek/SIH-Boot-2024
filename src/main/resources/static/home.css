@@ -32,7 +32,12 @@ h1 i {
 }
 
 .navbar {
+    height: 48px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 15px;
     background-color: #29d8b8;
+    overflow: hidden;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -40,7 +45,7 @@ h1 i {
     display: flex;
     justify-content: space-around;
     list-style-type: none;
-    margin: 0;
+    margin-top: 2px;
     padding: 0;
 }
 
@@ -107,9 +112,10 @@ input[type="text"], input[type="number"], select {
 }
 
 button {
+    font-size: 20px;
     border-radius: 5px;
     padding: 10px;
-    background-color: #0dc0ae;
+    background-color: #29d8b8;
     color: white;
     border: none;
     cursor: pointer;

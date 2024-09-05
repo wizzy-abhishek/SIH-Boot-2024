@@ -96,5 +96,6 @@ public class Doctor {
                 "\nappointments=" + (appointments != null ? appointments.size() + " appointments" : "null") +
                 "}\n";
     }
+
 }
 

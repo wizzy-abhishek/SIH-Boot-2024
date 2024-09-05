@@ -34,32 +34,40 @@ public class PatientController {
     }
 
     @PostMapping("patient")
-    public ModelAndView addPatient(@RequestParam("aadhaarNumber") String aadhaar , @RequestParam("name") String name  , @RequestParam("mobile") String mobile ,@RequestParam("date_of_Birth") String dob , @RequestParam("departmentList") Department department , ModelAndView modelAndView){
+    public ModelAndView addPatient(@RequestParam("aadhaarNumber") String aadhaar,
+                                   @RequestParam("name") String name,
+                                   @RequestParam("mobile") String mobile,
+                                   @RequestParam("date_of_Birth") String dob,
+                                   @RequestParam("departmentList") Department department,
+                                   ModelAndView modelAndView) {
 
-        System.out.println("ADD PATIENT METHOD CALLED IN CONTROLLER ");
+        System.out.println("ADD PATIENT METHOD CALLED IN CONTROLLER");
 
-        if(patientService.findPatientById(aadhaar) != null){
+        if(patientService.isPatientExists(aadhaar)) {
             modelAndView.setViewName("error");
-            modelAndView.addObject("error" , "Its already their") ;
-            return modelAndView ;
+            modelAndView.addObject("error", "Patient already exists");
+            return modelAndView;
         }
 
-       Patient patient = patientService.addNewPatient(aadhaar , name , mobile , dob , department);
-       if (patient != null){
-            modelAndView.addObject("patientDetails" , patientService.findPatientById(aadhaar));
+        // Add new patient
+        Patient patient = patientService.addNewPatient(aadhaar, name, mobile, dob, department);
+
+        if (patient != null) {
+            modelAndView.addObject("patientDetail", patient);
             modelAndView.setViewName("patient");
-        }
-       else{
-
-            System.out.println("Exception");
+            List<Department> departments = departmentService.getAllDepartments();
+            modelAndView.addObject("departments", departments);
+        } else {
+            System.out.println("Exception occurred while adding patient");
 
             modelAndView.setViewName("error");
-            modelAndView.addObject("error" , "ERROR OCCURRED");
+            modelAndView.addObject("error", "ERROR OCCURRED");
 
-            return modelAndView ;
+            return modelAndView;
         }
-        System.out.println("Success");
-        return modelAndView ;
+
+        System.out.println("Patient added successfully");
+        return modelAndView;
     }
 
     @GetMapping("search_Patient")
@@ -77,6 +85,8 @@ public class PatientController {
 
         modelAndView.addObject("patientDetail" , patient);
         modelAndView.setViewName("patient");
+        List<Department> departments = departmentService.getAllDepartments();
+        modelAndView.addObject("departments", departments);
 
         return modelAndView ;
     }
