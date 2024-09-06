@@ -12,6 +12,8 @@ import com.hospital.hospital.service.EmergencyService;
 import com.hospital.hospital.service.queueService.DeptService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 
 import java.io.BufferedReader;
@@ -19,11 +21,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @SpringBootApplication
-public class HospitalApplication {
+public class HospitalApplication extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(HospitalApplication.class);
+	}
 
 	public static void main(String[] args) throws IOException {
-		ApplicationContext context =  SpringApplication.run(HospitalApplication.class, args);
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		SpringApplication.run(HospitalApplication.class, args);
+
+/*		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		DepartmentService departmentService = context.getBean(DepartmentService.class);
 		DoctorService doctorService = context.getBean(DoctorService.class);
 		DeptService deptService = context.getBean(DeptService.class);
@@ -104,6 +113,7 @@ public class HospitalApplication {
 		}
 
 
-	}
+	}*/
 
+	}
 }

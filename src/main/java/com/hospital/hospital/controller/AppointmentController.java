@@ -33,7 +33,7 @@ public class AppointmentController {
     @Autowired
     private DepartmentService departmentService ;
 
-    @RequestMapping("appointment")
+    @GetMapping("appointment")
     public String appointmentPage(){
         return "appointment" ;
     }

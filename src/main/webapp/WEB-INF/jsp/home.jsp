@@ -118,7 +118,16 @@
 
             <label for="queue-number">Queue Number:</label>
             <input type="text" id="queue-number" name="queue-number" placeholder="${queueData['queuePosition']}" readonly>
+            <p> WE GONNA UPDATE THIS TOO BEFORE UPLOADING TO SIH WEBSITE , WE WILL EXPLAIN ALL APPROACHES AND EVERYTHING WHATEVER PPT DEMANDS HERE IN CREATIVE WAY TOO </p>
+            <p>
+            DEPT MAI DEPT ADD KR SKTE .
+            PHIR DOCTOR ADD KRNA .
+            PATIENT ADD KRNA .
+            PATIENT KO DOCTOR APPOINT KR SKTE .
+            PHIR USKO APPOINTMENT FIX KR SKTE .
+            </p>
         </div>
+
     </div>
 
     <!-- Reset All Button -->

@@ -6,10 +6,7 @@ import com.hospital.hospital.service.queueService.QueueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -25,8 +22,7 @@ public class QueueController {
     @Autowired
     private DeptService deptService;
 
-    // Handle all GET requests to display the home/queue page
-    @GetMapping({"/queue", "/home", "/"})
+    @GetMapping({"/queue", "/home", "/index" , "/"})
     public String showHomePage(Model model) {
         try {
             List<Dept> departments = deptService.getAllDepartments();
@@ -34,7 +30,7 @@ public class QueueController {
             return "home";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Error loading departments. Please try again later.");
-            return "error";  // Display a generic error page
+            return "error";
         }
     }
 
