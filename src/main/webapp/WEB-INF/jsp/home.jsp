@@ -126,6 +126,9 @@
             PATIENT KO DOCTOR APPOINT KR SKTE .
             PHIR USKO APPOINTMENT FIX KR SKTE .
             </p>
+            <p>
+            This is a prototype for SIH , MAIN VERSION WILL ON REACT AND WILL CONTAIN MORE FUNCTIONALITY
+            </p>
         </div>
 
     </div>
