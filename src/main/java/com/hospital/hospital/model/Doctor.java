@@ -18,11 +18,11 @@ public class Doctor {
     @Column(length = 50, nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dept_id")
     private Department dept;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "doctor_patient",
             joinColumns = @JoinColumn(name = "doctor_id"),
@@ -30,7 +30,7 @@ public class Doctor {
     )
     private List<Patient> patients;
 
-    @ManyToMany(mappedBy = "doctorList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "doctorList", fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     public Doctor() {

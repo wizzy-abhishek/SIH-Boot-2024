@@ -26,7 +26,7 @@ public class Patient {
     @Column(nullable = false , length = 40)
     private String date_of_Birth ;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "patient_department",
             joinColumns = @JoinColumn(name = "patient_aadhar"),
@@ -34,7 +34,7 @@ public class Patient {
     )
     private List<Department> departmentList;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "patient_doctor",
             joinColumns = @JoinColumn(name = "patient_aadhar"),
@@ -42,7 +42,7 @@ public class Patient {
     )
     private List<Doctor> doctors;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "patient_meds",
             joinColumns = @JoinColumn(name = "patient_aadhar"),
@@ -52,10 +52,10 @@ public class Patient {
 
     private String dates;
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Bed> beds;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "patient_appointment",
             joinColumns = @JoinColumn(name = "patient_aadhar"),
@@ -63,7 +63,7 @@ public class Patient {
     )
     private List<Appointment> appointments;
 
-    @OneToOne(mappedBy = "patient", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @OneToOne(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     private Emergency emergency;
 
     public Patient() {

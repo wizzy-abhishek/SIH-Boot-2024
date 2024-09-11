@@ -18,12 +18,12 @@ public class Emergency {
 
     private boolean isAllotted;
 
-    @ManyToOne(fetch = FetchType.EAGER) // Keeping as ManyToOne, as a patient can be involved in multiple emergencies over time
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY) // Keeping as ManyToOne, as a patient can be involved in multiple emergencies over time
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_aadhar", unique = true) // Ensure uniqueness in the database
     private Patient patient;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "emergency_doctor",
             joinColumns = @JoinColumn(name = "emergency_id"),

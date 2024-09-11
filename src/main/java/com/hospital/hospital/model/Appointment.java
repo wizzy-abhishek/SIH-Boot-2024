@@ -19,11 +19,11 @@ public class Appointment {
 
     private String date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_aadhar")
     private Patient patient ;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "appointment_department",
             joinColumns = @JoinColumn(name = "appointment_id"),
@@ -31,7 +31,7 @@ public class Appointment {
     )
     private List<Department> departmentList ;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "appointment_doctor",
             joinColumns = @JoinColumn(name = "appointment_id"),
@@ -39,7 +39,7 @@ public class Appointment {
     )
     private List<Doctor> doctorList;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "appointment_test",
             joinColumns = @JoinColumn(name = "appointment_id"),

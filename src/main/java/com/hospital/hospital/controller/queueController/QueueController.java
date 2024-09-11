@@ -22,7 +22,7 @@ public class QueueController {
     @Autowired
     private DeptService deptService;
 
-    @GetMapping({"/queue", "/home", "/index" , "/"})
+    @GetMapping({"/queue", "/home", "/index" })
     public String showHomePage(Model model) {
         try {
             List<Dept> departments = deptService.getAllDepartments();

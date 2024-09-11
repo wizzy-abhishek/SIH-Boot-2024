@@ -16,10 +16,10 @@ public class Department {
     @Column(length = 35)
     private String name;
 
-    @OneToMany(mappedBy = "dept", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "dept", fetch = FetchType.LAZY)
     private List<Doctor> doctors;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "department_patient",
             joinColumns = @JoinColumn(name = "department_id"),
@@ -27,7 +27,7 @@ public class Department {
     )
     private List<Patient> patients;
 
-    @ManyToMany(mappedBy = "departmentList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "departmentList", fetch = FetchType.LAZY)
     private List<Appointment> appointments;
 
     public Department() {
