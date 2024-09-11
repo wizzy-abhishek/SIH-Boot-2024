@@ -1,5 +1,5 @@
-package com.hospital.hospital.config;
 /*
+package com.hospital.hospital.config;
 
 import com.hospital.hospital.service.user.MyUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for simplicity; enable it with proper configuration in production
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("src/main/webapp/WEB-INF/views/login.jsp" , "/resources/static/**").permitAll()
+                        .requestMatchers("src/main/webapp/WEB-INF/views/login.jsp" , "/resources/static/**").fullyAuthenticated()
                         .requestMatchers(HttpMethod.GET, "/api/resource").permitAll() // Allow GET requests to /api/resource
                         .requestMatchers(HttpMethod.POST, "/api/resource").hasRole("ADMIN") // Allow POST requests to /api/resource for users with ADMIN role
                         .requestMatchers(HttpMethod.PUT, "/api/resource").hasRole("ADMIN") // Allow PUT requests to /api/resource for users with ADMIN role

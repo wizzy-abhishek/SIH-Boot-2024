@@ -1,5 +1,4 @@
 package com.hospital.hospital.service.user;
-/*
 
 import com.hospital.hospital.model.user.UserDb;
 import com.hospital.hospital.model.user.UserPrincipal;
@@ -30,4 +29,3 @@ public class MyUserDetailService implements UserDetailsService {
 
     }
 }
-*/
