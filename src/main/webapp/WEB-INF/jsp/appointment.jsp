@@ -47,7 +47,7 @@
                          </form>
                      </li>
                      <li>
-                         <form action="underConstruction">
+                         <form action="medicines">
                              <button type="submit">Inventory</button>
                          </form>
                      </li>

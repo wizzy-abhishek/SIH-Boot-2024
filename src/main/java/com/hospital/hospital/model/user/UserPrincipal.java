@@ -1,3 +1,4 @@
+/*
 package com.hospital.hospital.model.user;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -53,3 +54,4 @@ public class UserPrincipal implements UserDetails {
         return true ;
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.hospital.hospital.service.user;
 
 import com.hospital.hospital.model.user.UserDb;
@@ -29,3 +30,4 @@ public class MyUserDetailService implements UserDetailsService {
 
     }
 }
+*/

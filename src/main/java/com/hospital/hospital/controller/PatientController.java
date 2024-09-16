@@ -2,9 +2,10 @@ package com.hospital.hospital.controller;
 
 import com.hospital.hospital.model.Department;
 import com.hospital.hospital.model.Patient;
+import com.hospital.hospital.model.PatientAssignedMeds;
 import com.hospital.hospital.service.DepartmentService;
 import com.hospital.hospital.service.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,14 @@ import java.util.List;
 @Controller
 public class PatientController {
 
-    @Autowired
-    private PatientService patientService;
+    private final PatientService patientService;
 
-    @Autowired
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
+
+    public PatientController(PatientService patientService, DepartmentService departmentService) {
+        this.patientService = patientService;
+        this.departmentService = departmentService;
+    }
 
     @GetMapping({"patient"})
     public String patientForm(Model model){
@@ -33,12 +37,12 @@ public class PatientController {
         return "patient";
     }
 
-    @PostMapping("patient")
+    @PostMapping("/patient")
     public ModelAndView addPatient(@RequestParam("aadhaarNumber") String aadhaar,
-                                   @RequestParam("name") String name,
-                                   @RequestParam("mobile") String mobile,
-                                   @RequestParam("date_of_Birth") String dob,
-                                   @RequestParam("departmentList") Department department,
+    		@RequestParam("name") String name,
+    		@RequestParam("mobile") String mobile,
+    		@RequestParam("date_of_Birth") String dob,
+    		@RequestParam("departmentList") Department department,
                                    ModelAndView modelAndView) {
 
         System.out.println("ADD PATIENT METHOD CALLED IN CONTROLLER");
@@ -67,10 +71,11 @@ public class PatientController {
         }
 
         System.out.println("Patient added successfully");
+
         return modelAndView;
     }
 
-    @GetMapping("search_Patient")
+    @GetMapping(path = "search_Patient")
     public ModelAndView patientSearch(@RequestParam("searchPatient") String patientId , ModelAndView modelAndView){
 
         System.out.println("Patient Controller :- Search column ");
@@ -87,6 +92,9 @@ public class PatientController {
         modelAndView.setViewName("patient");
         List<Department> departments = departmentService.getAllDepartments();
         modelAndView.addObject("departments", departments);
+
+        List<PatientAssignedMeds> patientMeds = patientService.getPatientMeds(patientId);
+        modelAndView.addObject("patientMeds", patientMeds);
 
         return modelAndView ;
     }

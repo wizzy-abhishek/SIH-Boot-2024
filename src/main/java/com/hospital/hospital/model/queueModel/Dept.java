@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Scope("prototype")
@@ -36,6 +37,19 @@ public class Dept {
 
     public void setQueues(List<QueueEntity> queues) {
         this.queues = queues;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dept dept = (Dept) o;
+        return Objects.equals(name, dept.name) && Objects.equals(queues, dept.queues);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, queues);
     }
 }
 

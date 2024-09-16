@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -28,6 +30,19 @@ public class Test {
         return "\nTest{" +
                 "testName='" + testName + '\'' +
                 "}\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Test test = (Test) o;
+        return Objects.equals(testName, test.testName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(testName);
     }
 }
 

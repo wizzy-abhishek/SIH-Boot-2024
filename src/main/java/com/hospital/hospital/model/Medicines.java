@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -39,6 +42,18 @@ public class Medicines {
                 "}\n";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Medicines medicines = (Medicines) o;
+        return quantity == medicines.quantity && Objects.equals(meds_name, medicines.meds_name) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(meds_name, quantity);
+    }
 }
 
 

@@ -1,25 +1,35 @@
 package com.hospital.hospital.service;
 
 import com.hospital.hospital.model.Department;
+import com.hospital.hospital.model.Medicines;
 import com.hospital.hospital.model.Patient;
+import com.hospital.hospital.model.PatientAssignedMeds;
+import com.hospital.hospital.repo.PatientAssignedMedsRepo;
 import com.hospital.hospital.repo.PatientRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 @Service
 public class PatientService {
 
-    @Autowired
-    private PatientRepo patientRepo;
+    private final PatientRepo patientRepo;
 
-    @Autowired
-    private DepartmentService deptService;
+    private final DepartmentService deptService;
 
-    @Autowired
-    private DoctorService doctorService;
+    private final MedicineService medicineService ;
+
+    private final PatientAssignedMedsRepo patientAssignedMedsRepo ;
+
+    public PatientService(PatientRepo patientRepo, DepartmentService deptService, DoctorService doctorService, MedicineService medicineService, PatientAssignedMedsRepo patientAssignedMedsRepo) {
+        this.patientRepo = patientRepo;
+        this.deptService = deptService;
+        this.medicineService = medicineService;
+        this.patientAssignedMedsRepo = patientAssignedMedsRepo;
+    }
 
     // Synchronized method to ensure thread safety
     @Transactional
@@ -49,7 +59,7 @@ public class PatientService {
             deptService.addDepartment(department);
 
         } catch (Exception e) {
-            // Log and rethrow or handle the exception as needed
+
             System.err.println("Error adding new patient: " + e.getMessage());
             throw new RuntimeException("Failed to add new patient", e);
         }
@@ -136,4 +146,44 @@ public class PatientService {
             throw new RuntimeException("Failed to delete all patients", e);
         }
     }
+
+
+    public void assignMedsToPatient(String patientId, String medicinesName, Integer quantity) {
+
+        // Find patient by ID
+
+        System.out.println("In ASSIGN MEDS TO PATIENT METHOD ");
+
+        Patient patient = findPatientById(patientId);
+
+        // Find medicine by name
+        Medicines meds = medicineService.findByIdByName(medicinesName);
+
+        // Check if enough stock is available
+        if (meds.getQuantity() < quantity) {
+            throw new IllegalArgumentException("Not enough stock for medicine: " + medicinesName);
+        }
+
+        // Create a new entry in PatientAssignedMeds
+        PatientAssignedMeds patientAssignedMeds = new PatientAssignedMeds();
+
+        patientAssignedMeds.setPatient(patient);
+        patientAssignedMeds.setMedicines(meds);
+        patientAssignedMeds.setQuantity(quantity);
+        patientAssignedMeds.setLocalDateTime(LocalDateTime.now());
+
+        // Save the assigned medicine entry
+        patientAssignedMedsRepo.save(patientAssignedMeds);
+
+        // Update global medicine stock
+        meds.setQuantity(meds.getQuantity() - quantity);
+        medicineService.saveMeds(meds);
+    }
+
+    public List<PatientAssignedMeds> getPatientMeds(String patientId) {
+        // Fetch all medicines assigned to a specific patient
+        return patientAssignedMedsRepo.findByPatientAadharNumber(patientId);
+    }
+
+
 }

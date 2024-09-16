@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @Scope("prototype")
@@ -97,5 +98,17 @@ public class Doctor {
                 "}\n";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Doctor doctor = (Doctor) o;
+        return Objects.equals(id, doctor.id) && Objects.equals(name, doctor.name) && Objects.equals(dept, doctor.dept) && Objects.equals(patients, doctor.patients) && Objects.equals(appointments, doctor.appointments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, dept, patients, appointments);
+    }
 }
 

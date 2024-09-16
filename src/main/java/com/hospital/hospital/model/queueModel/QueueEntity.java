@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Entity
 @Component
 @Scope("prototype")
@@ -52,6 +54,19 @@ public class QueueEntity {
                 ", patientNumber=" + patientNumber +
                 ", department=" + (dept != null ? dept.getName() : "null") +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        QueueEntity that = (QueueEntity) o;
+        return Objects.equals(id, that.id) && Objects.equals(patientNumber, that.patientNumber) && Objects.equals(dept, that.dept);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, patientNumber, dept);
     }
 }
 

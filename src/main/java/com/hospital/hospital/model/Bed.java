@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 @Scope("prototype")
 @Entity
@@ -55,5 +57,17 @@ public class Bed {
                 "}\n";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bed bed = (Bed) o;
+        return isAllotted == bed.isAllotted && Objects.equals(bedId, bed.bedId) && Objects.equals(patient, bed.patient);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bedId, isAllotted, patient);
+    }
 }
 

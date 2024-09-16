@@ -50,7 +50,7 @@
                        </form>
                    </li>
                    <li>
-                       <form action="underConstruction">
+                       <form action="medicines">
                            <button type="submit">Inventory</button>
                        </form>
                    </li>
@@ -126,6 +126,13 @@
                 <c:forEach var="patientDoc" items="${patientDetail.doctors}">
                 <p>${patientDoc.id}</p>
                 </c:forEach>
+
+                <!-- Display list of Medicines -->
+                <p>Medicines:</p>
+                <c:forEach var="patientMeds" items="${patientMeds}">
+                    <p>${patientMeds.medicines.meds_name} -- ${patientMeds.quantity} -- ${patientMeds.localDateTime}</p>
+                </c:forEach>
+
             </div>
         </div>
 </div>

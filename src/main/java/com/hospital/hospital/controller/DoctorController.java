@@ -50,6 +50,10 @@ public class DoctorController {
         }
 
         doctorService.addNewDoctor(doctorId , docName , departments) ;
+
+        List<Department> departmentList = departmentService.getAllDepartments();
+        modelAndView.addObject("departmentList" , departmentList );
+
         modelAndView.setViewName("doctor");
         modelAndView.addObject("doctorDetails" , doctorService.findById(doctorId));
 
@@ -74,6 +78,9 @@ public class DoctorController {
         modelAndView.setViewName("doctor");
         modelAndView.addObject("doctorDetails" , doctorService.findById(doctorId));
 
+        List<Department> departmentList = departmentService.getAllDepartments();
+        modelAndView.addObject("departmentList" , departmentList );
+
         System.out.println("DOC Controller Line 73");
 
         System.out.println("Doctor's patients: " + doctor.getPatients());
@@ -85,15 +92,18 @@ public class DoctorController {
     public ModelAndView appointDoctorToPatient(@RequestParam("patient-id") String patientId,
                                                @RequestParam("appoint-dr-id") String doctorId,
                                                ModelAndView modelAndView) {
+
+        // Error in this code
+
         try {
             boolean isAssigned = doctorService.assignDoctorToPatient(patientId, doctorId);
 
             if (isAssigned) {
-                modelAndView.addObject("message", "Doctor assigned to patient successfully!");
-                modelAndView.setViewName("success");
+                modelAndView.addObject("error", "Doctor assigned to patient successfully!");
+                modelAndView.setViewName("error");
             } else {
-                modelAndView.addObject("message", "Doctor is already assigned to this patient.");
-                modelAndView.setViewName("info");
+                modelAndView.addObject("error", "Doctor is already assigned to this patient.");
+                modelAndView.setViewName("error");
             }
         } catch (Exception e) {
             modelAndView.addObject("error", "An error occurred while assigning the doctor.");

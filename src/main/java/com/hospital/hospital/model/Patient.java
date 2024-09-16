@@ -7,10 +7,11 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
+@Entity
 @Component
 @Scope("prototype")
-@Entity
 public class Patient {
 
     @Id
@@ -42,13 +43,8 @@ public class Patient {
     )
     private List<Doctor> doctors;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "patient_meds",
-            joinColumns = @JoinColumn(name = "patient_aadhar"),
-            inverseJoinColumns = @JoinColumn(name = "meds_id")
-    )
-    private List<Medicines> meds;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<PatientAssignedMeds> medsList ;
 
     private String dates;
 
@@ -67,9 +63,9 @@ public class Patient {
     private Emergency emergency;
 
     public Patient() {
+        this.medsList = new ArrayList<>(5);
         this.departmentList = new ArrayList<>(5);
         this.doctors = new ArrayList<>(5);
-        this.meds = new ArrayList<>(5);
         this.dates = String.valueOf(new ArrayList<>(5));
         this.beds = new ArrayList<>(5);
         this.appointments = new ArrayList<>(5);
@@ -82,7 +78,6 @@ public class Patient {
         this.date_of_Birth = String.valueOf(date_of_Birth);
         this.departmentList = departmentList;
         this.doctors = doctors;
-        this.meds = meds;
         this.dates = dates.toString();
         this.beds = beds;
         this.appointments = appointments;
@@ -137,12 +132,12 @@ public class Patient {
         this.doctors = doctors;
     }
 
-    public List<Medicines> getMeds() {
-        return meds;
+    public List<PatientAssignedMeds> getMedsList() {
+        return medsList;
     }
 
-    public void setMeds(List<Medicines> meds) {
-        this.meds = meds;
+    public void setMedsList(List<PatientAssignedMeds> medsList) {
+        this.medsList = medsList;
     }
 
     public String getDates() {
@@ -186,11 +181,24 @@ public class Patient {
                 "\ndate_of_Birth=" + date_of_Birth +
                 "\ndepartments=" + (departmentList != null ? departmentList.stream().map(Department::getName).toList() : "null") +
                 "\ndoctors=" + (doctors != null ? doctors.stream().map(doctor -> "Doctor{name='" + doctor.getName() + "', id=" + doctor.getId() + "}").toList() : "null") +
-                "\nmeds=" + (meds != null ? meds.stream().map(medicines -> "Meds Name = " + medicines.getMeds_name()).toList() : "null") +
+
                 "\nbeds=" + (beds != null ? beds.stream().map(Bed::getBedId).toList() : "null") +
                 "\nappointments=" + (appointments != null ? appointments.size() + " appointments" : "null") +
                 "\nemergency=" + (emergency != null ? emergency.toString() : "null") +
                 "}\n";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Patient patient = (Patient) o;
+        return Objects.equals(aadharNumber, patient.aadharNumber) && Objects.equals(name, patient.name) && Objects.equals(mobile, patient.mobile) && Objects.equals(date_of_Birth, patient.date_of_Birth) && Objects.equals(departmentList, patient.departmentList) && Objects.equals(doctors, patient.doctors) && Objects.equals(medsList, patient.medsList) && Objects.equals(dates, patient.dates) && Objects.equals(beds, patient.beds) && Objects.equals(appointments, patient.appointments) && Objects.equals(emergency, patient.emergency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(aadharNumber, name, mobile, date_of_Birth, departmentList, doctors, medsList, dates, beds, appointments, emergency);
     }
 
 }
